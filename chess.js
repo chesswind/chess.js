@@ -992,7 +992,6 @@ var Chess = function(fen) {
       return null
     }
 
-    var move = old.move
     kings = old.kings
     turn = old.turn
     castling = old.castling
@@ -1003,6 +1002,10 @@ var Chess = function(fen) {
     var us = turn
     var them = swap_color(turn)
 
+    var move = old.move
+    if (move === "NONE") {
+      return move;
+    }
     board[move.from] = board[move.to]
     board[move.from].type = move.piece // to undo any promotions
     board[move.to] = null
@@ -1743,6 +1746,15 @@ var Chess = function(fen) {
       return ascii()
     },
 
+    flip_turn: function() {
+      push("NONE");
+      half_moves++
+      if (turn === BLACK) {
+        move_number++
+      }
+      turn = swap_color(turn);
+    },
+
     turn: function() {
       return turn
     },
@@ -1893,11 +1905,4 @@ var Chess = function(fen) {
   }
 }
 
-/* export Chess object if using node or any other CommonJS compatible
- * environment */
-if (typeof exports !== 'undefined') exports.Chess = Chess
-/* export Chess object for any RequireJS compatible environment */
-if (typeof define !== 'undefined')
-  define(function() {
-    return Chess
-  })
+export default Chess;

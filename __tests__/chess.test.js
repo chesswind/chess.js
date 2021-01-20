@@ -1,6 +1,4 @@
-if (typeof require != "undefined") {
-  var Chess = require('../chess').Chess;
-}
+import Chess from '../chess';
 
 describe("Perft", function() {
   var perfts = [
